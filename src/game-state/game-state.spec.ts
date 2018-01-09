@@ -1,4 +1,5 @@
 import { Expect, Test, TestCase, TestFixture } from 'alsatian';
+import { SquareState } from '../square-state/square-state';
 import { GameState } from './game-state';
 
 @TestFixture('GameState.constructor')
@@ -8,7 +9,9 @@ export class GameStateConstructorSpec {
     @TestCase(11883, [1, 2, 1, 0, 2, 2, 0, 1, 0])
     @TestCase(1, [1])
     public construct(state: number, results: Array<number>): void {
-        Expect(new GameState(state).state).toEqual(results);
+        Expect(new GameState(state).state.map((squareState: SquareState) => {
+            return squareState.state;
+        })).toEqual(results);
     }
 }
 
