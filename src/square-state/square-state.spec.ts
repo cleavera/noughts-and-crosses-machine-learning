@@ -19,6 +19,6 @@ export class SquareStateConstructorInvalidStateSpec {
     @TestCase(3)
     @TestCase(-1)
     public construct(state: number): void {
-        Expect(() => new SquareState(state).state).toThrow();
+        Expect(() => new SquareState(state)).toThrow();
     }
 }
