@@ -1,0 +1,24 @@
+import { Expect, Test, TestCase, TestFixture } from 'alsatian';
+import { GameState } from './game-state';
+
+@TestFixture('GameState.constructor')
+export class GameStateConstructorSpec {
+    @Test('should construct correctly')
+    @TestCase(void 0, [0])
+    @TestCase(11883, [1, 2, 1, 0, 2, 2, 0, 1, 0])
+    @TestCase(1, [1])
+    public construct(state: number, results: Array<number>): void {
+        Expect(new GameState(state).state).toEqual(results);
+    }
+}
+
+@TestFixture('GameState.serialise')
+export class GameStateSerialiseSpec {
+    @Test('should serialise correctly')
+    @TestCase(11883)
+    @TestCase(806)
+    @TestCase(1)
+    public construct(state: number): void {
+        Expect(new GameState(state).serialise()).toEqual(state);
+    }
+}
