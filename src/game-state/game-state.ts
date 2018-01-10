@@ -1,12 +1,33 @@
+import { PlayerNumber } from '../game/constants/player-number.interface';
+import { ISquare } from '../game/interfaces/move.interface';
+import { ISquareState } from '../square-state/interfaces/square-state.interface';
 import { SquareState } from '../square-state/square-state';
 
 export class GameState {
     private static readonly GRID_SIZE: number = 9;
 
-    public state: Array<SquareState>;
+    public readonly state: Array<SquareState>;
 
     constructor(state: number = 0) {
-        this._deserialise(state);
+        this.state = this._deserialise(state);
+    }
+
+    public get(move: ISquare): SquareState {
+        return this.state[move];
+    }
+
+    public set(square: ISquare, playerNumber: PlayerNumber): void {
+        this.state[square].set(playerNumber);
+    }
+
+    public get vacantSquares(): Array<ISquare> {
+        return this.state.reduce((acc: Array<ISquare>, state: SquareState, index: number) => {
+            if (state.isVacant) {
+                acc.push(index as ISquare);
+            }
+
+            return acc;
+        }, []);
     }
 
     public serialise(): number {
@@ -15,17 +36,19 @@ export class GameState {
         }, ''), 3);
     }
 
-    private _deserialise(state: number): void {
-        this.state = state.toString(3).split('').map((move: string) => {
-            return new SquareState(parseInt(move, 3));
+    private _deserialise(state: number): Array<SquareState> {
+        const gameState: Array<SquareState> = state.toString(3).split('').map((move: string) => {
+            return new SquareState(parseInt(move, 3) as ISquareState);
         });
 
-        for (let x: number = this.state.length; x < GameState.GRID_SIZE; x++) {
-            this.state.unshift(new SquareState());
+        for (let x: number = gameState.length; x < GameState.GRID_SIZE; x++) {
+            gameState.unshift(new SquareState());
         }
 
-        if (GameState.GRID_SIZE < this.state.length) {
-            throw new Error(`Invalid game state: "${state}", grid area to big: "${this.state.length}" should be ${GameState.GRID_SIZE}`);
+        if (GameState.GRID_SIZE < gameState.length) {
+            throw new Error(`Invalid game state: "${state}", grid area to big: "${gameState.length}" should be ${GameState.GRID_SIZE}`);
         }
+
+        return gameState;
     }
 }

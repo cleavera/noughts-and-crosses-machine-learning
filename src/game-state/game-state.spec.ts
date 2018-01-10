@@ -1,4 +1,7 @@
-import { Expect, Test, TestCase, TestFixture } from 'alsatian';
+import { Expect, Setup, Test, TestCase, TestFixture } from 'alsatian';
+import { PlayerNumber } from '../game/constants/player-number.interface';
+import { ISquare } from '../game/interfaces/move.interface';
+import { ISquareState } from '../square-state/interfaces/square-state.interface';
 import { SquareState } from '../square-state/square-state';
 import { GameState } from './game-state';
 
@@ -13,18 +16,14 @@ export class GameStateConstructorSpec {
             return squareState.state;
         })).toEqual(results);
     }
-}
 
-@TestFixture('GameState.constructor.invalidState')
-export class GameStateConstructorInvalidStateSpec {
     @Test('should throw an error for invalid states')
     @TestCase(1E6)
     @TestCase(19683)
-    public construct(state: number): void {
+    public invalidStates(state: number): void {
         Expect(() => new GameState(state)).toThrow();
     }
 }
-
 
 @TestFixture('GameState.serialise')
 export class GameStateSerialiseSpec {
@@ -34,5 +33,64 @@ export class GameStateSerialiseSpec {
     @TestCase(1)
     public construct(state: number): void {
         Expect(new GameState(state).serialise()).toEqual(state);
+    }
+}
+
+@TestFixture('GameState.get')
+export class GameStateGetSpec {
+    private _gameState: GameState;
+
+    @Setup
+    public construct(): void {
+        this._gameState = new GameState(11883);
+    }
+
+    @Test('should get correctly')
+    @TestCase(0, 1)
+    @TestCase(1, 2)
+    @TestCase(2, 1)
+    @TestCase(3, 0)
+    @TestCase(4, 2)
+    @TestCase(5, 2)
+    @TestCase(6, 0)
+    @TestCase(7, 1)
+    @TestCase(8, 0)
+    public get(square: ISquare, state: ISquareState): void {
+        Expect(this._gameState.get(square).state).toEqual(state);
+    }
+}
+
+@TestFixture('GameState.set')
+export class GameStateSetSpec {
+    private _gameState: GameState;
+
+    @Setup
+    public construct(): void {
+        this._gameState = new GameState(11883);
+    }
+
+    @Test('should set correctly')
+    @TestCase(3, 1)
+    @TestCase(6, 2)
+    public get(square: ISquare, state: PlayerNumber): void {
+        this._gameState.set(square, state);
+
+        Expect(this._gameState.get(square).state).toEqual(state);
+    }
+}
+
+@TestFixture('GameState.vacantSquares')
+export class GameStateVacantSquaresSpec {
+    private _gameState: GameState;
+
+    @Setup
+    public construct(): void {
+        this._gameState = new GameState(11883);
+    }
+
+    @Test('should return the vacant squares')
+    @TestCase([3, 6, 8])
+    public get(squares: ISquare): void {
+        Expect(this._gameState.vacantSquares).toEqual(squares);
     }
 }
