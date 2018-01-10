@@ -1,0 +1,4 @@
+<button [disabled]="!state.isVacant">
+    <span *ngIf="state.isCross">X</span>
+    <span *ngIf="state.isNought">O</span>
+</button>

@@ -1,3 +1,4 @@
+import { PlayerNumber } from '../../constants/player-number.interface';
 import { ISquareState } from '../../interfaces/square-state.interface';
 
 export class SquareState {
@@ -9,6 +10,14 @@ export class SquareState {
 
     public get isVacant(): boolean {
         return this.state === 0;
+    }
+
+    public get isNought(): boolean {
+        return this.state === PlayerNumber.NOUGHTS;
+    }
+
+    public get isCross(): boolean {
+        return this.state === PlayerNumber.CROSSES;
     }
 
     public set(state: ISquareState): void {
