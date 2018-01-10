@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { GameResult } from '../../constants/game-result.constant';
 import { PlayerNumber } from '../../constants/player-number.constant';
@@ -10,16 +10,22 @@ export class Game {
     public state: GameState;
     public noughts: IPlayer;
     public crosses: IPlayer;
+    public result: GameResult;
 
-    public gameOver: EventEmitter<GameResult> = new EventEmitter<GameResult>();
+    public gameOver: BehaviorSubject<GameResult | null>;
 
     constructor(noughts: IPlayer, crosses: IPlayer, state: GameState = new GameState()) {
+        this.gameOver = new BehaviorSubject<GameResult | null>(null);
         this.state = state;
         this.noughts = noughts;
         this.crosses = crosses;
 
         this._moveNoughts().catch((e: string) => {
             console.log(e); // tslint:disable-line no-console
+        });
+
+        this.gameOver.subscribe((result: GameResult) => {
+            this.result = result;
         });
     }
 
@@ -45,7 +51,7 @@ export class Game {
         this.state.set(move, playerNumber);
 
         if (!this.state.vacantSquares.length) {
-            this.gameOver.emit(GameResult.DRAW);
+            this.gameOver.next(GameResult.DRAW);
 
             return Promise.reject('Game over');
         }

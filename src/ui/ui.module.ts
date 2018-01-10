@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { BoardUi } from './components/board/board.component';
 import { GameUi } from './components/game/game.component';
+import { ResultUi } from './components/result/result.component';
 import { SquareUi } from './components/square/square.component';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { SquareUi } from './components/square/square.component';
     declarations: [
         BoardUi,
         GameUi,
+        ResultUi,
         SquareUi
     ],
     imports: [

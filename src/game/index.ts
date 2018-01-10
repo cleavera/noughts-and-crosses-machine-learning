@@ -1,3 +1,4 @@
+export { GameResult } from './constants/game-result.constant';
 export { ISquare } from './interfaces/square.interface';
 export { IPlayer } from './interfaces/player.interface';
 export { SquareState } from './classes/square-state/square-state';

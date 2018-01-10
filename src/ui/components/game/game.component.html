@@ -1,2 +1,3 @@
 <ui-board [uiBoardState]="currentGame.state" (uiBoardMove)="onMove($event)"></ui-board>
+<ui-result [uiResult]="currentGame.result"></ui-result>
 <button (click)="newGame()">New Game</button>
