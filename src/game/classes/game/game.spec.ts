@@ -1,10 +1,10 @@
 import { Expect, Setup, Test, TestCase, TestFixture } from 'alsatian';
-import { $spy } from '../core';
+import { $spy } from '../../../core/index';
 import { GameState } from '../game-state/game-state';
 import { Game } from './game';
-import { ISquare } from './interfaces/move.interface';
-import { IPlayer } from './interfaces/player.interface';
-import { PlayerStub } from './interfaces/player.stub';
+import { ISquare } from '../../interfaces/square.interface';
+import { IPlayer } from '../../interfaces/player.interface';
+import { PlayerStub } from '../../interfaces/player.stub';
 
 @TestFixture('Game.constructor')
 export class GameConstructorSpec {

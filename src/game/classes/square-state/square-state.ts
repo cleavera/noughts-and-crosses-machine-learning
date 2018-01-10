@@ -1,4 +1,4 @@
-import { ISquareState } from './interfaces/square-state.interface';
+import { ISquareState } from '../../interfaces/square-state.interface';
 
 export class SquareState {
     public state: ISquareState;

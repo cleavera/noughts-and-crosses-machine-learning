@@ -1,7 +1,7 @@
 import { Expect, Setup, Test, TestCase, TestFixture } from 'alsatian';
-import { PlayerNumber } from '../game/constants/player-number.interface';
-import { ISquare } from '../game/interfaces/move.interface';
-import { ISquareState } from '../square-state/interfaces/square-state.interface';
+import { PlayerNumber } from '../../constants/player-number.interface';
+import { ISquare } from '../../interfaces/square.interface';
+import { ISquareState } from '../../interfaces/square-state.interface';
 import { SquareState } from '../square-state/square-state';
 import { GameState } from './game-state';
 

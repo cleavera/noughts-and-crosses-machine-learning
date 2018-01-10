@@ -1,7 +1,7 @@
 import { GameState } from '../game-state/game-state';
-import { PlayerNumber } from './constants/player-number.interface';
-import { ISquare } from './interfaces/move.interface';
-import { IPlayer } from './interfaces/player.interface';
+import { PlayerNumber } from '../../constants/player-number.interface';
+import { ISquare } from '../../interfaces/square.interface';
+import { IPlayer } from '../../interfaces/player.interface';
 
 export class Game {
     public state: GameState;

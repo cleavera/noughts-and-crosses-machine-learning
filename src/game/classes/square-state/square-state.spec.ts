@@ -1,5 +1,5 @@
 import { Expect, Test, TestCase, TestFixture } from 'alsatian';
-import { ISquareState } from './interfaces/square-state.interface';
+import { ISquareState } from '../../interfaces/square-state.interface';
 import { SquareState } from './square-state';
 
 @TestFixture('SquareState.constructor')
