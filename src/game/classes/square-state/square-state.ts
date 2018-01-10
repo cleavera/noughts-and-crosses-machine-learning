@@ -1,4 +1,4 @@
-import { PlayerNumber } from '../../constants/player-number.interface';
+import { PlayerNumber } from '../../constants/player-number.constant';
 import { ISquareState } from '../../interfaces/square-state.interface';
 
 export class SquareState {

@@ -1,4 +1,4 @@
-import { PlayerNumber } from '../../constants/player-number.interface';
+import { PlayerNumber } from '../../constants/player-number.constant';
 import { ISquare } from '../../interfaces/square.interface';
 import { ISquareState } from '../../interfaces/square-state.interface';
 import { SquareState } from '../square-state/square-state';
