@@ -1,1 +1,1 @@
-<ui-board [uiBoardState]="currentGame.state"></ui-board>
+<ui-board [uiBoardState]="currentGame.state" (uiBoardMove)="onMove($event)"></ui-board>

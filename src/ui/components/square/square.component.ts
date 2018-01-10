@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { SquareState } from '../../../game';
 
@@ -8,6 +8,9 @@ import { SquareState } from '../../../game';
     templateUrl: './square.component.html'
 })
 export class SquareUi {
-    @Input()
+    @Input('uiSquareState')
     public state: SquareState;
+
+    @Output('uiSquareMove')
+    public onMove: EventEmitter<void> = new EventEmitter<void>();
 }

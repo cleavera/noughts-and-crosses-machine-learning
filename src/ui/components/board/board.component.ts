@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { GameState } from '../../../game';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { GameState, ISquare } from '../../../game';
 
 @Component({
     selector: 'ui-board',
@@ -9,4 +9,7 @@ import { GameState } from '../../../game';
 export class BoardUi {
     @Input('uiBoardState')
     public state: GameState;
+
+    @Output('uiBoardMove')
+    public onMove: EventEmitter<ISquare> = new EventEmitter<ISquare>();
 }
