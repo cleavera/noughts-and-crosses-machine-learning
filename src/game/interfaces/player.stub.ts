@@ -6,4 +6,5 @@ import { ISquare } from './square.interface';
 
 export class PlayerStub implements IPlayer {
     public move: (state: GameState) => Promise<ISquare> = createFunctionSpy();
+    public onFinish: (result: -1 | 0 | 1) => void = createFunctionSpy();
 }

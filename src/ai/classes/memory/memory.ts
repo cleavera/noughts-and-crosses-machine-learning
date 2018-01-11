@@ -15,6 +15,10 @@ export class Memory {
         return this._getLobeMemories(lobe)[key];
     }
 
+    public serialise(): string {
+        return JSON.stringify(this._store);
+    }
+
     private _getLobeMemories(lobe: string): IDict<any> {
         if (!this._store[lobe]) {
             this._store[lobe] = {};

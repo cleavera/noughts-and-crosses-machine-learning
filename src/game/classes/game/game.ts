@@ -52,6 +52,8 @@ export class Game {
         this.state.set(move, playerNumber);
 
         if (this._checkGameOver()) {
+            this.gameOver.complete();
+
             return Promise.reject('Game over');
         }
     }
@@ -131,7 +133,7 @@ export class Game {
             } else if (index === 7) {
                 results[3] = (results[3] || 0) + 1;
                 results[7] = (results[7] || 0) + 1;
-            } else if (index === 7) {
+            } else if (index === 8) {
                 results[1] = (results[1] || 0) + 1;
                 results[4] = (results[4] || 0) + 1;
                 results[7] = (results[7] || 0) + 1;

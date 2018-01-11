@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Static } from '../../../core';
-import { Game, IPlayer, ISquare } from '../../../game';
+import { Game, GameResult, IPlayer, ISquare } from '../../../game';
 import { Player } from '../../services/player/player';
 
 @Component({
@@ -22,6 +22,19 @@ export class GameUi implements OnInit {
 
     public newGame(): void {
         this.currentGame = new Game(this.noughts, this.crosses);
+
+        this.currentGame.gameOver.subscribe((result: GameResult) => {
+            if (result === GameResult.NOUGHTS) {
+                this.noughts.onFinish(1);
+                this.crosses.onFinish(-1);
+            } else if (result === GameResult.CROSSES) {
+                this.noughts.onFinish(-1);
+                this.crosses.onFinish(1);
+            } else {
+                this.noughts.onFinish(0);
+                this.crosses.onFinish(0);
+            }
+        });
     }
 
     public onMove(square: ISquare): void {

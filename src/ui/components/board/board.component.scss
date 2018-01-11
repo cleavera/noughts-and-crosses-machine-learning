@@ -1,8 +1,11 @@
 :host {
   display: flex;
+  flex-wrap: wrap;
+  width: 60px;
 }
 
 .square {
+  box-sizing: border-box;
   height: 1em;
   font-size: 20px;
   width: 1em;

@@ -5,8 +5,10 @@ export class Player implements IPlayer {
     public resolve: IPromiseResolver<ISquare>;
 
     public async move(): Promise<ISquare> {
-        return new Promise<ISquare>((resolve: IPromiseResolver<ISquare>) => {
+        return new Promise<ISquare>((resolve: IPromiseResolver<ISquare>): void => {
             this.resolve = resolve;
         });
     }
+
+    public onFinish(): void {}
 }

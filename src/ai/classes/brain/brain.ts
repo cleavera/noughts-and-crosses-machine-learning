@@ -5,7 +5,7 @@ import { Memory } from '../memory/memory';
 
 export class Brain {
     private _lobes: Array<ILobe>;
-    private _memory: Memory;
+    public _memory: Memory;
 
     constructor(lobes: Array<ILobe> = [], memory: Memory = new Memory()) {
         this._lobes = lobes;
@@ -16,8 +16,8 @@ export class Brain {
         this._lobes.push(lobe);
     }
 
-    public decide(input: any): any {
-        const requiredLobe: Nullable<ILobe> = this._lobes.find((lobe: ILobe) => {
+    public decide<T = any>(input: any, score: Promise<number>): T {
+        const requiredLobe: Nullable<ILobe<any, T>> = this._lobes.find((lobe: ILobe) => {
             return lobe.claim(input);
         });
 
@@ -25,6 +25,6 @@ export class Brain {
             throw new Error('I do not possess this skill');
         }
 
-        return requiredLobe.activate(input, new LobeMemory(requiredLobe.constructor.name, this._memory));
+        return requiredLobe.activate(input, new LobeMemory(requiredLobe.constructor.name, this._memory), score);
     }
 }
