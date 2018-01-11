@@ -1,13 +1,13 @@
 <label>
     Noughts
-    <select (change)="onSelectNoughts(this.value)">
-        <option *ngFor="let type of playerTypes; let i = index" [value]="index">{{type.label}}</option>
+    <select (change)="onSelectNoughts($event.target.value)">
+        <option *ngFor="let type of playerTypes; let i = index" [value]="i">{{type.label}}</option>
     </select>
 </label>
 
 <label>
     Crosses
-    <select (change)="onSelectCrosses(this.value)">
-        <option *ngFor="let type of playerTypes; let i = index" [value]="index">{{type.label}}</option>
+    <select (change)="onSelectCrosses($event.target.value)">
+        <option *ngFor="let type of playerTypes; let i = index" [value]="i">{{type.label}}</option>
     </select>
 </label>

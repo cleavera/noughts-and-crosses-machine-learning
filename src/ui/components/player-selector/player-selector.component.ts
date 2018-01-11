@@ -23,10 +23,12 @@ export class PlayerSelectorUi {
     }
 
     public onSelectNoughts(index: number): void {
+        console.log(index, this.playerTypes[index], this.playerTypes);
         this.selectNoughts.emit(this.playerTypes[index].type);
     }
 
     public onSelectCrosses(index: number): void {
+        console.log(index, this.playerTypes[index], this.playerTypes);
         this.selectCrosses.emit(this.playerTypes[index].type);
     }
 }

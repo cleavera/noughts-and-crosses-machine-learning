@@ -1,10 +1,11 @@
+import { IPromiseResolver } from '../../../core';
 import { IPlayer, ISquare } from '../../../game';
 
 export class Player implements IPlayer {
-    public resolve: (square: ISquare) => void;
+    public resolve: IPromiseResolver<ISquare>;
 
     public async move(): Promise<ISquare> {
-        return new Promise<ISquare>((resolve: (square: ISquare) => void) => {
+        return new Promise<ISquare>((resolve: IPromiseResolver<ISquare>) => {
             this.resolve = resolve;
         });
     }
