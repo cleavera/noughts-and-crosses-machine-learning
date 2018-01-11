@@ -4,6 +4,11 @@
     <button (click)="newGame()">New Game</button>
     <input type="checkbox" (change)="onAutoPlayChange($event.target.checked)" [checked]="isAutoPlay" />
 </div>
-<p>Game Count: {{gameCount}}</p>
+<div>
+    <p>Game count: {{gameCount}}</p>
+    <p>Noughts wins: {{winsNoughts}}</p>
+    <p>Crosses wins: {{winsCrosses}}</p>
+    <p>Draws: {{draws}}</p>
+</div>
 
 <ui-player-selector (uiPlayerSelectorCrosses)="onPlayerChangeCrosses($event)" (uiPlayerSelectorNoughts)="onPlayerChangeNoughts($event)"></ui-player-selector>

@@ -22,9 +22,7 @@ export class Game {
         this.noughts = noughts;
         this.crosses = crosses;
 
-        this._moveCrosses().catch((e: string) => {
-            console.log(e); // tslint:disable-line no-console
-        });
+        this._moveCrosses().catch(() => {});
 
         this.gameOver.subscribe((result: GameResult) => {
             this.result = result;

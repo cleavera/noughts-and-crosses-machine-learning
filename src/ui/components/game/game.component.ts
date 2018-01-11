@@ -16,11 +16,15 @@ export class GameUi implements OnInit {
     public crosses: IPlayer;
     public isAutoPlay: boolean;
     public gameCount: number;
+    public winsNoughts: number;
+    public winsCrosses: number;
+    public draws: number;
 
     private _subscription: Subscription;
 
     public ngOnInit(): void {
         this.gameCount = 0;
+        this._resetScores();
         this.noughts = new Player();
         this.crosses = new Player();
         this.newGame();
@@ -37,12 +41,15 @@ export class GameUi implements OnInit {
 
         this._subscription = this.currentGame.gameOver.subscribe((result: GameResult) => {
             if (result === GameResult.NOUGHTS) {
+                this.winsNoughts++;
                 this.noughts.onFinish(1);
                 this.crosses.onFinish(-1);
             } else if (result === GameResult.CROSSES) {
+                this.winsCrosses++;
                 this.noughts.onFinish(-1);
                 this.crosses.onFinish(1);
             } else if (result === GameResult.DRAW) {
+                this.draws++;
                 this.noughts.onFinish(0);
                 this.crosses.onFinish(0);
             } else {
@@ -73,13 +80,21 @@ export class GameUi implements OnInit {
 
     public onPlayerChangeNoughts(Type: Static<IPlayer>): void {
         this.noughts = new Type();
+        this._resetScores();
     }
 
     public onPlayerChangeCrosses(Type: Static<IPlayer>): void {
         this.crosses = new Type();
+        this._resetScores();
     }
 
     public onAutoPlayChange(isAutoPlay: boolean): void {
         this.isAutoPlay = isAutoPlay;
+    }
+
+    private _resetScores(): void {
+        this.winsCrosses = 0;
+        this.winsNoughts = 0;
+        this.draws = 0;
     }
 }
