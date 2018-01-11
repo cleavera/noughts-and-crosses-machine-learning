@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { SquareState } from '../../';
 
 import { GameResult } from '../../constants/game-result.constant';
 import { PlayerNumber } from '../../constants/player-number.constant';
@@ -20,7 +21,7 @@ export class Game {
         this.noughts = noughts;
         this.crosses = crosses;
 
-        this._moveNoughts().catch((e: string) => {
+        this._moveCrosses().catch((e: string) => {
             console.log(e); // tslint:disable-line no-console
         });
 
@@ -50,14 +51,93 @@ export class Game {
 
         this.state.set(move, playerNumber);
 
-        if (!this.state.vacantSquares.length) {
-            this.gameOver.next(GameResult.DRAW);
-
+        if (this._checkGameOver()) {
             return Promise.reject('Game over');
         }
     }
 
     private _isValid(move: ISquare): boolean {
         return this.state.get(move).isVacant;
+    }
+
+    private _checkGameOver(): boolean {
+        if (!this.state.vacantSquares.length) {
+            this.gameOver.next(GameResult.DRAW);
+
+            return true;
+        }
+
+        if (this._checkVictory(PlayerNumber.NOUGHTS)) {
+            this.gameOver.next(GameResult.NOUGHTS);
+
+            return true;
+        }
+
+        if (this._checkVictory(PlayerNumber.CROSSES)) {
+            this.gameOver.next(GameResult.CROSSES);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private _checkVictory(player: PlayerNumber): boolean {
+        const results: Array<number> = [];
+
+        this.state.state.forEach((squareState: SquareState, index: number): void => {
+            const isPlayer: boolean = squareState.state === player;
+
+            if (!isPlayer) {
+                return;
+            }
+
+            /*
+            0 0 0  1 x x  2 x x  x 3 x  x x 4  x x 5  x x x  x x x
+            x x x  x 1 x  2 x x  x 3 x  x x 4  x 5 x  6 6 6  x x x
+            x x x  x x 1  2 x x  x 3 x  x x 4  5 x x  x x x  7 7 7
+             */
+
+            if (index === 0) {
+                results[0] = (results[0] || 0) + 1;
+                results[1] = (results[1] || 0) + 1;
+                results[2] = (results[2] || 0) + 1;
+            } else if (index === 1) {
+                results[0] = (results[0] || 0) + 1;
+                results[3] = (results[3] || 0) + 1;
+            } else if (index === 2) {
+                results[0] = (results[0] || 0) + 1;
+                results[4] = (results[4] || 0) + 1;
+                results[5] = (results[5] || 0) + 1;
+            } else if (index === 3) {
+                results[2] = (results[2] || 0) + 1;
+                results[6] = (results[6] || 0) + 1;
+            } else if (index === 4) {
+                results[1] = (results[1] || 0) + 1;
+                results[3] = (results[3] || 0) + 1;
+                results[5] = (results[5] || 0) + 1;
+                results[6] = (results[6] || 0) + 1;
+            } else if (index === 5) {
+                results[4] = (results[4] || 0) + 1;
+                results[6] = (results[6] || 0) + 1;
+            } else if (index === 6) {
+                results[2] = (results[2] || 0) + 1;
+                results[5] = (results[5] || 0) + 1;
+                results[7] = (results[7] || 0) + 1;
+            } else if (index === 6) {
+                results[2] = (results[2] || 0) + 1;
+                results[5] = (results[5] || 0) + 1;
+                results[7] = (results[7] || 0) + 1;
+            } else if (index === 7) {
+                results[3] = (results[3] || 0) + 1;
+                results[7] = (results[7] || 0) + 1;
+            } else if (index === 7) {
+                results[1] = (results[1] || 0) + 1;
+                results[4] = (results[4] || 0) + 1;
+                results[7] = (results[7] || 0) + 1;
+            }
+        });
+
+        return results.indexOf(3) > -1;
     }
 }

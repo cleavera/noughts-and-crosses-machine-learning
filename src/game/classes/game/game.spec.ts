@@ -62,9 +62,9 @@ export class GameMoveSpec {
         this._game = new Game(this._noughts, this._crosses);
     }
 
-    @Test('should tell noughts to make a move')
+    @Test('should tell crosses to make a move')
     public start(): void {
-        Expect(this._noughts.move).toHaveBeenCalledWith(this._game.state);
-        Expect(this._crosses.move).not.toHaveBeenCalled();
+        Expect(this._noughts.move).not.toHaveBeenCalled();
+        Expect(this._crosses.move).toHaveBeenCalledWith(this._game.state);
     }
 }
