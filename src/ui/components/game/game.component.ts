@@ -14,20 +14,20 @@ export class GameUi implements OnInit {
     public crosses: Player;
 
     public ngOnInit(): void {
+        this.noughts = new Player();
+        this.crosses = new Player();
         this.newGame();
     }
 
     public newGame(): void {
-        this.noughts = new Player();
-        this.crosses = new Player();
         this.currentGame = new Game(this.noughts, this.crosses);
     }
 
     public onMove(square: ISquare): void {
-        if (this.noughts.resolve) {
-            this.move(square, this.noughts);
-        } else if (this.crosses.resolve) {
-            this.move(square, this.crosses);
+        if ('resolve' in this.currentGame.noughts) {
+            this.move(square, this.currentGame.noughts as Player);
+        } else if ('resolve' in this.currentGame.crosses) {
+            this.move(square, this.currentGame.crosses as Player);
         }
     }
 
