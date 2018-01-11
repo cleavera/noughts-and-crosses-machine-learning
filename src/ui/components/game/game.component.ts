@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Game, ISquare } from '../../../game';
+import { Static } from '../../../core';
+import { Game, IPlayer, ISquare } from '../../../game';
 import { Player } from '../../services/player/player';
 
 @Component({
@@ -10,8 +11,8 @@ import { Player } from '../../services/player/player';
 export class GameUi implements OnInit {
     public currentGame: Game;
 
-    public noughts: Player;
-    public crosses: Player;
+    public noughts: IPlayer;
+    public crosses: IPlayer;
 
     public ngOnInit(): void {
         this.noughts = new Player();
@@ -24,10 +25,10 @@ export class GameUi implements OnInit {
     }
 
     public onMove(square: ISquare): void {
-        if ('resolve' in this.currentGame.noughts) {
-            this.move(square, this.currentGame.noughts as Player);
-        } else if ('resolve' in this.currentGame.crosses) {
-            this.move(square, this.currentGame.crosses as Player);
+        if (this.currentGame.noughts instanceof Player && this.currentGame.noughts.resolve) {
+            this.move(square, this.currentGame.noughts);
+        } else if (this.currentGame.crosses instanceof Player && this.currentGame.crosses.resolve) {
+            this.move(square, this.currentGame.crosses);
         }
     }
 
@@ -35,5 +36,13 @@ export class GameUi implements OnInit {
         player.resolve(square);
 
         delete player.resolve;
+    }
+
+    public onPlayerChangeNoughts(Type: Static<IPlayer>): void {
+        this.noughts = new Type();
+    }
+
+    public onPlayerChangeCrosses(Type: Static<IPlayer>): void {
+        this.crosses = new Type();
     }
 }
