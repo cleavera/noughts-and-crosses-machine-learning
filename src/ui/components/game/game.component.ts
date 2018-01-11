@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 import { Static } from '../../../core';
 import { Game, GameResult, IPlayer, ISquare } from '../../../game';
 import { Player } from '../../services/player/player';
@@ -13,26 +14,45 @@ export class GameUi implements OnInit {
 
     public noughts: IPlayer;
     public crosses: IPlayer;
+    public isAutoPlay: boolean;
+    public gameCount: number;
+
+    private _subscription: Subscription;
 
     public ngOnInit(): void {
+        this.gameCount = 0;
         this.noughts = new Player();
         this.crosses = new Player();
         this.newGame();
     }
 
     public newGame(): void {
+        this.gameCount++;
+
+        if (this._subscription) {
+            this._subscription.unsubscribe();
+        }
+
         this.currentGame = new Game(this.noughts, this.crosses);
 
-        this.currentGame.gameOver.subscribe((result: GameResult) => {
+        this._subscription = this.currentGame.gameOver.subscribe((result: GameResult) => {
             if (result === GameResult.NOUGHTS) {
                 this.noughts.onFinish(1);
                 this.crosses.onFinish(-1);
             } else if (result === GameResult.CROSSES) {
                 this.noughts.onFinish(-1);
                 this.crosses.onFinish(1);
-            } else {
+            } else if (result === GameResult.DRAW) {
                 this.noughts.onFinish(0);
                 this.crosses.onFinish(0);
+            } else {
+                return;
+            }
+
+            if (this.isAutoPlay) {
+                window.setTimeout(() => {
+                    this.newGame();
+                }, 1);
             }
         });
     }
@@ -57,5 +77,9 @@ export class GameUi implements OnInit {
 
     public onPlayerChangeCrosses(Type: Static<IPlayer>): void {
         this.crosses = new Type();
+    }
+
+    public onAutoPlayChange(isAutoPlay: boolean): void {
+        this.isAutoPlay = isAutoPlay;
     }
 }

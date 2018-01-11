@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SquareState } from '../../';
+import { Nullable } from '../../../core';
 
 import { GameResult } from '../../constants/game-result.constant';
 import { PlayerNumber } from '../../constants/player-number.constant';
@@ -13,10 +14,10 @@ export class Game {
     public crosses: IPlayer;
     public result: GameResult;
 
-    public gameOver: BehaviorSubject<GameResult | null>;
+    public gameOver: BehaviorSubject<Nullable<GameResult>>;
 
     constructor(noughts: IPlayer, crosses: IPlayer, state: GameState = new GameState()) {
-        this.gameOver = new BehaviorSubject<GameResult | null>(null);
+        this.gameOver = new BehaviorSubject<Nullable<GameResult>>(null);
         this.state = state;
         this.noughts = noughts;
         this.crosses = crosses;
@@ -43,7 +44,21 @@ export class Game {
     }
 
     private async _move(player: IPlayer, playerNumber: PlayerNumber): Promise<void> {
-        const move: ISquare = await player.move(this.state);
+        let move: ISquare;
+
+        try {
+            move = await player.move(this.state);
+        } catch (e) {
+            if (playerNumber === PlayerNumber.CROSSES) {
+                this.gameOver.next(GameResult.NOUGHTS);
+            } else {
+                this.gameOver.next(GameResult.CROSSES);
+            }
+
+            this.gameOver.complete();
+
+            return Promise.reject('Game over');
+        }
 
         if (!this._isValid(move)) {
             return this._move(player, playerNumber);
