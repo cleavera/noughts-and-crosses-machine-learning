@@ -61,12 +61,6 @@ export class Game {
     }
 
     private _checkGameOver(): boolean {
-        if (!this.state.vacantSquares.length) {
-            this.gameOver.next(GameResult.DRAW);
-
-            return true;
-        }
-
         if (this._checkVictory(PlayerNumber.NOUGHTS)) {
             this.gameOver.next(GameResult.NOUGHTS);
 
@@ -75,6 +69,12 @@ export class Game {
 
         if (this._checkVictory(PlayerNumber.CROSSES)) {
             this.gameOver.next(GameResult.CROSSES);
+
+            return true;
+        }
+
+        if (!this.state.vacantSquares.length) {
+            this.gameOver.next(GameResult.DRAW);
 
             return true;
         }
