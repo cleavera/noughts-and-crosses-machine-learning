@@ -1,11 +1,15 @@
 import { Nullable } from '../../../core';
 import { ILobe } from '../../interfaces/lobe.interface';
+import { LobeMemory } from '../memory/lobe-memory';
+import { Memory } from '../memory/memory';
 
 export class Brain {
     private _lobes: Array<ILobe>;
+    private _memory: Memory;
 
-    constructor(lobes: Array<ILobe> = []) {
+    constructor(lobes: Array<ILobe> = [], memory: Memory = new Memory()) {
         this._lobes = lobes;
+        this._memory = memory;
     }
 
     public learnSkill(lobe: ILobe): void {
@@ -21,6 +25,6 @@ export class Brain {
             throw new Error('I do not possess this skill');
         }
 
-        return requiredLobe.activate(input);
+        return requiredLobe.activate(input, new LobeMemory(requiredLobe.constructor.name, this._memory));
     }
 }

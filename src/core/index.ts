@@ -1,3 +1,4 @@
+export { IDict } from './interfaces/dict.interface';
 export { $random } from './helpers/random.helper';
 export { Nullable } from './interfaces/nullable.interface';
 export { IPromiseResolver } from './interfaces/promise-resolver.interface';
