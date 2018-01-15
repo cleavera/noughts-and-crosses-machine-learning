@@ -23,7 +23,7 @@ export class Bot implements IPlayer {
                 this._game.push(score);
             }));
 
-            if (!decision) {
+            if (decision !== 0 && !decision) {
                 reject('Resign');
             } else {
                 resolve(decision);

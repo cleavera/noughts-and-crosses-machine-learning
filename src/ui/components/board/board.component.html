@@ -1,1 +1,1 @@
-<ui-square class="square" *ngFor="let square of state.state; let i = index" [uiSquareState]="square" (uiSquareMove)="onMove.emit(i)"></ui-square>
+<ui-square class="square" *ngFor="let square of state.state; let i = index" [uiSquareState]="square" (uiSquareMove)="onMove.emit(i)" [attr.aria-description]="i"></ui-square>
