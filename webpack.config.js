@@ -37,6 +37,10 @@ module.exports = {
         ]
     },
 
+    optimization: {
+        minimizer: []
+    },
+
     resolve: {
         modules: [
             'node_modules'

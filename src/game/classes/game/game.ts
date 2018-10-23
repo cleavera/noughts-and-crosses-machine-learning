@@ -99,10 +99,13 @@ export class Game {
         return false;
     }
 
+    private _result(n: number, results: Array<number>): void {
+        results[n] = (results[n] || 0) + 1;
+    }
+
     private _checkVictory(player: PlayerNumber): boolean {
         const results: Array<number> = [];
 
-        // tslint:disable-next-line cyclomatic-complexity
         this.state.state.forEach((squareState: SquareState, index: number): void => {
             const isPlayer: boolean = squareState.state === player;
 
@@ -110,49 +113,51 @@ export class Game {
                 return;
             }
 
-            /*
-            0 0 0  1 x x  2 x x  x 3 x  x x 4  x x 5  x x x  x x x
-            x x x  x 1 x  2 x x  x 3 x  x x 4  x 5 x  6 6 6  x x x
-            x x x  x x 1  2 x x  x 3 x  x x 4  5 x x  x x x  7 7 7
-             */
+            /**
+             * Below is the valid ways to win a game of noughts and crosses,
+             * each square can contribute to one or more ways of winning.
+             * Once a result reaches three it means three squares have
+             * contributed to that result (three in a row) so it must be
+             * completed.
+             *
+             * 0 0 0  1 x x  2 x x  x 3 x  x x 4  x x 5  x x x  x x x
+             * x x x  x 1 x  2 x x  x 3 x  x x 4  x 5 x  6 6 6  x x x
+             * x x x  x x 1  2 x x  x 3 x  x x 4  5 x x  x x x  7 7 7
+             **/
 
             if (index === 0) {
-                results[0] = (results[0] || 0) + 1;
-                results[1] = (results[1] || 0) + 1;
-                results[2] = (results[2] || 0) + 1;
+                this._result(0, results);
+                this._result(1, results);
+                this._result(2, results);
             } else if (index === 1) {
-                results[0] = (results[0] || 0) + 1;
-                results[3] = (results[3] || 0) + 1;
+                this._result(0, results);
+                this._result(3, results);
             } else if (index === 2) {
-                results[0] = (results[0] || 0) + 1;
-                results[4] = (results[4] || 0) + 1;
-                results[5] = (results[5] || 0) + 1;
+                this._result(0, results);
+                this._result(4, results);
+                this._result(5, results);
             } else if (index === 3) {
-                results[2] = (results[2] || 0) + 1;
-                results[6] = (results[6] || 0) + 1;
+                this._result(2, results);
+                this._result(6, results);
             } else if (index === 4) {
-                results[1] = (results[1] || 0) + 1;
-                results[3] = (results[3] || 0) + 1;
-                results[5] = (results[5] || 0) + 1;
-                results[6] = (results[6] || 0) + 1;
+                this._result(1, results);
+                this._result(3, results);
+                this._result(5, results);
+                this._result(6, results);
             } else if (index === 5) {
-                results[4] = (results[4] || 0) + 1;
-                results[6] = (results[6] || 0) + 1;
+                this._result(4, results);
+                this._result(6, results);
             } else if (index === 6) {
-                results[2] = (results[2] || 0) + 1;
-                results[5] = (results[5] || 0) + 1;
-                results[7] = (results[7] || 0) + 1;
-            } else if (index === 6) {
-                results[2] = (results[2] || 0) + 1;
-                results[5] = (results[5] || 0) + 1;
-                results[7] = (results[7] || 0) + 1;
+                this._result(2, results);
+                this._result(5, results);
+                this._result(7, results);
             } else if (index === 7) {
-                results[3] = (results[3] || 0) + 1;
-                results[7] = (results[7] || 0) + 1;
+                this._result(3, results);
+                this._result(7, results);
             } else if (index === 8) {
-                results[1] = (results[1] || 0) + 1;
-                results[4] = (results[4] || 0) + 1;
-                results[7] = (results[7] || 0) + 1;
+                this._result(1, results);
+                this._result(4, results);
+                this._result(7, results);
             }
         });
 
