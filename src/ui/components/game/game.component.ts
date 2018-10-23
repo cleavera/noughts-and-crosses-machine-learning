@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Static } from '../../../core';
 import { Game, GameResult, IPlayer, ISquare } from '../../../game';
 import { Player } from '../../services/player/player';

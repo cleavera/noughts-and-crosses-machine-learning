@@ -8,9 +8,11 @@ module.exports = {
     },
 
     output: {
-        path: path.resolve(__dirname),
+        path: path.resolve(__dirname, './dist'),
         filename: 'index.js'
     },
+
+    mode: 'production',
 
     module: {
         rules: [
@@ -48,8 +50,8 @@ module.exports = {
             inject: 'body'
         }),
         new webpack.ContextReplacementPlugin(
-            /\@angular(\\|\/)core(\\|\/)esm5/,
-            path.join(__dirname, './client')
+            /\@angular(\\|\/)core(\\|\/)fesm5/,
+            path.join(__dirname, './src')
         )
     ]
 };
