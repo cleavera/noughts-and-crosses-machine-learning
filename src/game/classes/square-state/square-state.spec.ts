@@ -40,7 +40,9 @@ export class SquareStateSetSpec {
     public invalidState(state: ISquareState): void {
         const squareState: SquareState = new SquareState();
 
-        Expect(() => squareState.set(state)).toThrow();
+        Expect(() => {
+            squareState.set(state);
+        }).toThrow();
     }
 }
 

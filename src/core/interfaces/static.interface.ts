@@ -1,3 +1,3 @@
-export interface Static<T> {
+export interface Static<T> { // tslint:disable-line interface-name
     new(...args: Array<any>): T;
 }

@@ -22,7 +22,9 @@ export class Game {
         this.noughts = noughts;
         this.crosses = crosses;
 
-        this._moveCrosses().catch(() => {});
+        this._moveCrosses().catch((e: Error) => {
+            console.error(e); // tslint:disable-line no-console
+        });
 
         this.gameOver.subscribe((result: GameResult) => {
             this.result = result;
@@ -100,6 +102,7 @@ export class Game {
     private _checkVictory(player: PlayerNumber): boolean {
         const results: Array<number> = [];
 
+        // tslint:disable-next-line cyclomatic-complexity
         this.state.state.forEach((squareState: SquareState, index: number): void => {
             const isPlayer: boolean = squareState.state === player;
 

@@ -4,8 +4,8 @@ import { LobeMemory } from '../memory/lobe-memory';
 import { Memory } from '../memory/memory';
 
 export class Brain {
-    private _lobes: Array<ILobe>;
     public _memory: Memory;
+    private _lobes: Array<ILobe>;
 
     constructor(lobes: Array<ILobe> = [], memory: Memory = new Memory()) {
         this._lobes = lobes;

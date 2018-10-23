@@ -1,10 +1,10 @@
 import { Expect, Setup, Test, TestCase, TestFixture } from 'alsatian';
 import { $spy } from '../../../core/index';
-import { GameState } from '../game-state/game-state';
-import { Game } from './game';
-import { ISquare } from '../../interfaces/square.interface';
 import { IPlayer } from '../../interfaces/player.interface';
 import { PlayerStub } from '../../interfaces/player.stub';
+import { ISquare } from '../../interfaces/square.interface';
+import { GameState } from '../game-state/game-state';
+import { Game } from './game';
 
 @TestFixture('Game.constructor')
 export class GameConstructorSpec {
@@ -20,11 +20,17 @@ export class GameConstructorSpec {
         this._noughts = new PlayerStub();
 
         $spy(this._crosses.move).andReturn(new Promise((resolve: (square: ISquare) => void, reject: () => void): void => {
-            this._promises.set(this._crosses.move, { resolve, reject });
+            this._promises.set(this._crosses.move, {
+                resolve,
+                reject
+            });
         }));
 
         $spy(this._noughts.move).andReturn(new Promise((resolve: (square: ISquare) => void, reject: () => void): void => {
-            this._promises.set(this._noughts.move, { resolve, reject });
+            this._promises.set(this._noughts.move, {
+                resolve,
+                reject
+            });
         }));
     }
 
@@ -52,11 +58,17 @@ export class GameMoveSpec {
         this._noughts = new PlayerStub();
 
         $spy(this._crosses.move).andReturn(new Promise((resolve: (square: ISquare) => void, reject: () => void): void => {
-            this._promises.set(this._crosses.move, { resolve, reject });
+            this._promises.set(this._crosses.move, {
+                resolve,
+                reject
+            });
         }));
 
         $spy(this._noughts.move).andReturn(new Promise((resolve: (square: ISquare) => void, reject: () => void): void => {
-            this._promises.set(this._noughts.move, { resolve, reject });
+            this._promises.set(this._noughts.move, {
+                resolve,
+                reject
+            });
         }));
 
         this._game = new Game(this._noughts, this._crosses);

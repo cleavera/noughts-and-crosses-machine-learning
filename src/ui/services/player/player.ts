@@ -10,5 +10,5 @@ export class Player implements IPlayer {
         });
     }
 
-    public onFinish(): void {}
+    public onFinish(): void {} // tslint:disable-line no-empty
 }
