@@ -1,0 +1,9 @@
+<ui-player-selector (uiPlayerSelectorCrosses)="onPlayerChangeCrosses($event)" (uiPlayerSelectorNoughts)="onPlayerChangeNoughts($event)"></ui-player-selector>
+
+<div>
+    <label>
+        <input type="checkbox" (change)="onAutoPlayChange($event.target.checked)" [checked]="isAutoPlay" />
+        Autostart next game
+    </label>
+    <button (click)="onNewGame()">New Game</button>
+</div>

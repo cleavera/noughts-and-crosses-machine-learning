@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SquareState } from '../../';
 import { Nullable } from '../../../core';
 
@@ -14,10 +14,12 @@ export class Game {
     public crosses: IPlayer;
     public result: GameResult;
 
-    public gameOver: BehaviorSubject<Nullable<GameResult>>;
+    public gameOver: Observable<Nullable<GameResult>>;
+    private _gameOver: BehaviorSubject<Nullable<GameResult>>;
 
     constructor(noughts: IPlayer, crosses: IPlayer, state: GameState = new GameState()) {
-        this.gameOver = new BehaviorSubject<Nullable<GameResult>>(null);
+        this._gameOver = new BehaviorSubject<Nullable<GameResult>>(null);
+        this.gameOver = this._gameOver.asObservable();
         this.state = state;
         this.noughts = noughts;
         this.crosses = crosses;
@@ -50,12 +52,12 @@ export class Game {
             move = await player.move(this.state);
         } catch (e) {
             if (playerNumber === PlayerNumber.CROSSES) {
-                this.gameOver.next(GameResult.NOUGHTS);
+                this._gameOver.next(GameResult.NOUGHTS);
             } else {
-                this.gameOver.next(GameResult.CROSSES);
+                this._gameOver.next(GameResult.CROSSES);
             }
 
-            this.gameOver.complete();
+            this._gameOver.complete();
 
             return Promise.reject('Game over');
         }
@@ -67,7 +69,7 @@ export class Game {
         this.state.set(move, playerNumber);
 
         if (this._checkGameOver()) {
-            this.gameOver.complete();
+            this._gameOver.complete();
 
             return Promise.reject('Game over');
         }
@@ -79,19 +81,19 @@ export class Game {
 
     private _checkGameOver(): boolean {
         if (this._checkVictory(PlayerNumber.NOUGHTS)) {
-            this.gameOver.next(GameResult.NOUGHTS);
+            this._gameOver.next(GameResult.NOUGHTS);
 
             return true;
         }
 
         if (this._checkVictory(PlayerNumber.CROSSES)) {
-            this.gameOver.next(GameResult.CROSSES);
+            this._gameOver.next(GameResult.CROSSES);
 
             return true;
         }
 
         if (!this.state.vacantSquares.length) {
-            this.gameOver.next(GameResult.DRAW);
+            this._gameOver.next(GameResult.DRAW);
 
             return true;
         }

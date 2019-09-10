@@ -1,14 +1,9 @@
 <ui-board [uiBoardState]="currentGame.state" (uiBoardMove)="onMove($event)"></ui-board>
 <ui-result [uiResult]="currentGame.result"></ui-result>
-<div>
-    <button (click)="newGame()">New Game</button>
-    <input type="checkbox" (change)="onAutoPlayChange($event.target.checked)" [checked]="isAutoPlay" />
-</div>
-<div>
-    <p>Game count: {{gameCount}}</p>
-    <p>Noughts wins: {{winsNoughts}}</p>
-    <p>Crosses wins: {{winsCrosses}}</p>
-    <p>Draws: {{draws}}</p>
-</div>
+<ui-controls
+        [uiControlsGame]="currentGame"
+        (uiControlsPlayerSelectCrosses)="onPlayerChangeCrosses($event)"
+        (uiControlsPlayerSelectNoughts)="onPlayerChangeNoughts($event)"
+        (uiControlsNewGame)="onNewGame()"></ui-controls>
 
-<ui-player-selector (uiPlayerSelectorCrosses)="onPlayerChangeCrosses($event)" (uiPlayerSelectorNoughts)="onPlayerChangeNoughts($event)"></ui-player-selector>
+<ui-scoreboard [uiScoreboardGames]="gameCount" [uiScoreboardCrosses]="winsCrosses" [uiScoreboardDraws]="draws" [uiScoreboardNoughts]="winsNoughts"></ui-scoreboard>

@@ -40,6 +40,7 @@ export class GameUi implements OnInit {
         this.currentGame = new Game(this.noughts, this.crosses);
 
         this._subscription = this.currentGame.gameOver.subscribe((result: GameResult) => {
+            console.log('Game', result);
             if (result === GameResult.NOUGHTS) {
                 this.winsNoughts++;
                 this.noughts.onFinish(1);
@@ -52,16 +53,12 @@ export class GameUi implements OnInit {
                 this.draws++;
                 this.noughts.onFinish(0);
                 this.crosses.onFinish(0);
-            } else {
-                return;
-            }
-
-            if (this.isAutoPlay) {
-                window.setTimeout(() => {
-                    this.newGame();
-                }, 1);
             }
         });
+    }
+
+    public onNewGame(): void {
+        this.newGame();
     }
 
     public onMove(square: ISquare): void {
@@ -86,10 +83,6 @@ export class GameUi implements OnInit {
     public onPlayerChangeCrosses(Type: Static<IPlayer>): void {
         this.crosses = new Type();
         this._resetScores();
-    }
-
-    public onAutoPlayChange(isAutoPlay: boolean): void {
-        this.isAutoPlay = isAutoPlay;
     }
 
     private _resetScores(): void {
