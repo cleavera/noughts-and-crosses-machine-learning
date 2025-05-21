@@ -31,7 +31,6 @@ module.exports = {
                 test: /\.scss$/,
                 use: [
                     'raw-loader',
-                    'sass-loader'
                 ]
             }
         ]
